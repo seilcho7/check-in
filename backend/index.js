@@ -4,14 +4,17 @@ const port = 3001;
 const cors = require('cors');
 
 app.use(cors());
+app.use(express.json({ limit: '1mb' }));
 
-app.get('/api/customers', (req, res) => {
-    const customers = [
-        {id: 1, name: `Seil`},
-        {id: 2, name: 'Hong'}
-    ];
-    res.json(customers);
-});
+app.post('/api', (req, res) => {
+    console.log(req.body);
+    const data = req.body;
+    res.json({
+        status: 'success',
+        latitude: data.lat,
+        longitude: data.lon
+    })
+})
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
