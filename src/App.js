@@ -24,6 +24,7 @@ class App extends React.Component {
     );
   }
 
+  // Get geolocation
   _getLocation = () => {
     if ('geolocation' in navigator) {
       console.log('geolocation available');
@@ -40,6 +41,7 @@ class App extends React.Component {
     }
   }
 
+  // Save data to nedb when submit button is clicked
   _submitLocation = async () => {
     const response = await fetch('http://localhost:3001/api', {
           method: 'post',
