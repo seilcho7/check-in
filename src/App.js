@@ -6,12 +6,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: {}
+      location: {},
+      mood: ''
     }
   }
 
   componentDidMount() {
-    this._getLocation();
+    this._geolocation();
   }
 
   render() {
@@ -19,13 +20,16 @@ class App extends React.Component {
       <div>
         Data Selfie
         <Geolocation location={this.state.location} />
-        <SubmitButton submitLocation={this.state.location !== {} ? this._submitLocation : null} />
+        <SubmitButton inputValue={this.state.mood}
+                      handleInput={this._handleInput} 
+                      submitLocation={this.state.location !== {} ? this._submitLocation : null}
+                      />
       </div>
     );
   }
 
   // Get geolocation
-  _getLocation = () => {
+  _geolocation = () => {
     if ('geolocation' in navigator) {
       console.log('geolocation available');
       navigator.geolocation.getCurrentPosition(position => {
@@ -48,10 +52,28 @@ class App extends React.Component {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(this.state.location)
+          body: JSON.stringify({
+            location: this.state.location,
+            mood: this.state.mood
+          })
         });
     const data = await response.json();
     console.log(data);
+    this.setState({
+      mood: ''
+    }, this._getLocation);
+  }
+
+  _getLocation = async () => {
+    const response = await fetch('http://localhost:3001/api');
+    const data = await response.json();
+    console.log(data);
+  }
+
+  _handleInput = (mood) => {
+    this.setState({
+      mood
+    })
   }
 
 }
