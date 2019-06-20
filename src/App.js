@@ -4,14 +4,14 @@ import Home from './components/Home';
 import Geolocation from './components/Geolocation';
 import SubmitButton from './components/SubmitButton';
 import List from './components/List';
-import Webcam from "react-webcam";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       location: {},
-      mood: ''
+      mood: '',
+      picture: ''
     }
   }
 
@@ -43,11 +43,9 @@ class App extends React.Component {
                         inputValue={this.state.mood}
                         handleInput={this._handleInput} 
                         submitLocation={this.state.location !== {} ? this._submitLocation : null}
+                        submitPicture={this._submitPicture}
+                        savePicture={this._savePicture}
                         />
-                <Webcam
-                  height={320}
-                  width={320}
-                  />
               </div>
             )} />
           <Route path='/list'
@@ -87,19 +85,27 @@ class App extends React.Component {
           },
           body: JSON.stringify({
             location: this.state.location,
-            mood: this.state.mood
+            mood: this.state.mood,
+            picture: this.state.picture
           })
         });
     const data = await response.json();
     console.log(data);
     this.setState({
-      mood: ''
+      mood: '',
+      picture: ''
     });
   }
 
   _handleInput = (mood) => {
     this.setState({
       mood
+    })
+  }
+
+  _savePicture = (picture) => {
+    this.setState({
+      picture
     })
   }
 

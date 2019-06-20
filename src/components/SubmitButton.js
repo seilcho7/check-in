@@ -1,17 +1,43 @@
 import React from 'react';
+import Webcam from "react-webcam";
 
-export default function SubmitButton({submitLocation, inputValue, handleInput}) {
-    return (
-        <div>
-            <input placeholder="Mood" value={inputValue} onChange={(e) => {
-                handleInput(e.target.value);
-            }}
-            />
-            <button onClick={() => {
-                submitLocation();
-            }}>
-                Submit
-            </button>
-        </div>
-    )
+export default class SubmitButton extends React.Component {
+    setRef = webcam => {
+        this.webcam = webcam;
+    };
+
+    render() {
+        return (
+            <div>
+                <div>
+                    <Webcam
+                    audio={false}
+                        height={320}
+                        width={320}
+                        ref={this.setRef}
+                        screenshotFormat="image/jpeg"
+                        />
+                </div>
+                <div>
+                    <input placeholder="Mood" value={this.props.inputValue} onChange={(e) => {
+                        this.props.handleInput(e.target.value);
+                    }}
+                    />
+                    <button onClick={async () => {
+                        await this._capture();
+                        this.props.submitLocation();
+                    }}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        )
+    }
+    
+    _capture = () => {
+        const imageSrc = this.webcam.getScreenshot();
+        this.props.savePicture(imageSrc);
+    };
+
+
 }

@@ -28,6 +28,7 @@ export default class List extends React.Component {
                             <li>Location: {post.location.lat.toFixed(2)}&deg;, {post.location.lon.toFixed(2)}&deg;</li>
                             <li>Mood: {post.mood}</li>
                             <li>{date}</li>
+                            <li><img src={post.picture}></img></li>
                         </ul>
                     )
                     })}

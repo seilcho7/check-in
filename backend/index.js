@@ -28,7 +28,7 @@ app.post('/api', (req, res) => {
     const data = req.body;
     const timestamp = Date.now();
     data.timestamp = timestamp;
-    if (data.location !== {}) {
+    if (data.location !== {} && data.picture) {
         database.insert(data);
     }
     res.json({
@@ -36,7 +36,8 @@ app.post('/api', (req, res) => {
         mood: data.mood,
         timestamp: timestamp,
         latitude: data.location.lat,
-        longitude: data.location.lon
+        longitude: data.location.lon,
+        picture: data.picture
     })
 })
 
