@@ -15,7 +15,6 @@ export default class SubmitButton extends React.Component {
                         height={320}
                         width={320}
                         ref={this.setRef}
-                        screenshotFormat="image/jpeg"
                         />
                 </div>
                 <div>
@@ -38,6 +37,5 @@ export default class SubmitButton extends React.Component {
         const imageSrc = this.webcam.getScreenshot();
         this.props.savePicture(imageSrc);
     };
-
 
 }

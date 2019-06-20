@@ -11,8 +11,11 @@ export default class List extends React.Component {
     async componentDidMount() {
         const response = await fetch('http://localhost:3001/api');
         const data = await response.json();
+        const sortedData = data.sort(function(a, b) {
+            return b.timestamp - a.timestamp
+        })
         this.setState({
-            data
+            data: sortedData
         })
         console.log(this.state.data);
     }
@@ -27,10 +30,10 @@ export default class List extends React.Component {
                     return (
                         <ul key={i}>
                             <li>
-                                <div><iframe title="map" width="100%" height="600" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">Map a route</a></iframe></div>
+                                <div><iframe title="map" width="100%" height="200" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/"></a></iframe></div>
                             </li>
-                            <li>Location: {post.location.lat.toFixed(2)}&deg;, {post.location.lon.toFixed(2)}&deg;</li>
-                            <li>Mood: {post.mood}</li>
+                            {/* <li>Location: {post.location.lat.toFixed(2)}&deg;, {post.location.lon.toFixed(2)}&deg;</li> */}
+                            <li>{post.mood}</li>
                             <li>{date}</li>
                             <li><img src={post.picture} alt=""></img></li>
                         </ul>
