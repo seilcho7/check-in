@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Geolocation from './components/Geolocation';
 import SubmitButton from './components/SubmitButton';
 import List from './components/List';
+import Webcam from "react-webcam";
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +44,10 @@ class App extends React.Component {
                         handleInput={this._handleInput} 
                         submitLocation={this.state.location !== {} ? this._submitLocation : null}
                         />
+                <Webcam
+                  height={320}
+                  width={320}
+                  />
               </div>
             )} />
           <Route path='/list'
