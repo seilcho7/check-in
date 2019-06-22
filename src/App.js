@@ -1,8 +1,7 @@
 import React from 'react';
+import './App.css';
 import { Link, HashRouter, Route } from 'react-router-dom'
-import Home from './components/Home';
-import Geolocation from './components/Geolocation';
-import SubmitButton from './components/SubmitButton';
+import Post from './components/Post';
 import List from './components/List';
 
 class App extends React.Component {
@@ -23,10 +22,10 @@ class App extends React.Component {
     return (
       <div>
         <HashRouter basename='/'>
+          <div className="title">
+            <h2>check!n</h2>
+          </div>
           <ul className="nav justify-content-center">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
             <li className="nav-item">
               <Link className="nav-link" to="/post">Post</Link>
             </li>
@@ -34,12 +33,12 @@ class App extends React.Component {
               <Link className="nav-link" to="/list">List</Link>
             </li>
           </ul>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={List}/>
           <Route path='/post'
             render={() => (
               <div>
-                <Geolocation location={this.state.location}/>
-                <SubmitButton
+                <Post
+                        location={this.state.location}
                         inputValue={this.state.mood}
                         handleInput={this._handleInput} 
                         submitLocation={this.state.location !== {} ? this._submitLocation : null}

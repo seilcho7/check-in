@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 export default class List extends React.Component {
     constructor(props) {
@@ -24,21 +25,21 @@ export default class List extends React.Component {
         
         return (
             <div>
-                    {this.state.data.map((post, i) => {
-                        const date = new Date(post.timestamp).toLocaleString();
-                        const url = `http://maps.google.com/maps?q=${post.location.lat}, ${post.location.lon}&z=15&output=embed`;
-                    return (
-                        <ul key={i}>
-                            <li>
-                                <div><iframe title="map" width="100%" height="200" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/"></a></iframe></div>
-                            </li>
-                            {/* <li>Location: {post.location.lat.toFixed(2)}&deg;, {post.location.lon.toFixed(2)}&deg;</li> */}
-                            <li>{post.mood}</li>
-                            <li>{date}</li>
-                            <li><img src={post.picture} alt=""></img></li>
-                        </ul>
-                    )
-                    })}
+                {this.state.data.map((post, i) => {
+                    const date = new Date(post.timestamp).toLocaleString();
+                    const url = `http://maps.google.com/maps?q=${post.location.lat}, ${post.location.lon}&z=15&output=embed`;
+                return (
+                    <div key={i} className="card">
+                        <iframe className="card-img-top" title="map" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">map</a></iframe>
+                        <img src={post.picture} className="card-img-top" alt="..."/>
+                        <div className="card-body">
+                            <h5 className="card-title">{date}</h5>
+                            <p className="card-text">{post.mood}</p>
+                            <button className="btn btn-primary">delete</button>
+                        </div>
+                    </div>
+                )
+                })}
             </div>
         )
 
