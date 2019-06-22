@@ -3,9 +3,25 @@ import Webcam from "react-webcam";
 import '../App.css';
 
 export default class Post extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            date: ''
+        }
+    }
     setRef = webcam => {
         this.webcam = webcam;
     };
+
+    componentDidMount() {
+        this.interval = setInterval(() => {
+            this._date();
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
     render() {
         const url = `http://maps.google.com/maps?q=${this.props.location.lat}, ${this.props.location.lon}&z=15&output=embed`;
@@ -20,7 +36,7 @@ export default class Post extends React.Component {
                     ref={this.setRef}
                     />
                 <div className="card-body">
-                    <h5 className="card-title">check!n</h5>
+                    <h5 className="card-title">{this.state.date}</h5>
                     <p className="card-text"><input value={this.props.inputValue} onChange={(e) => {
                         this.props.handleInput(e.target.value);
                     }}
@@ -38,5 +54,13 @@ export default class Post extends React.Component {
         const imageSrc = this.webcam.getScreenshot();
         this.props.savePicture(imageSrc);
     };
+
+    _date = () => {
+        const timestamp = Date.now();
+        const date = new Date(timestamp).toLocaleString();
+        this.setState({
+            date
+        })
+    }
 
 }
