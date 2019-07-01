@@ -44,6 +44,7 @@ class App extends React.Component {
                         submitLocation={this.state.location !== {} ? this._submitLocation : null}
                         submitPicture={this._submitPicture}
                         savePicture={this._savePicture}
+                        resetMood={this._resetMood}
                         />
               </div>
             )} />
@@ -105,6 +106,12 @@ class App extends React.Component {
   _savePicture = (picture) => {
     this.setState({
       picture
+    })
+  }
+
+  _resetMood = () => {
+    this.setState({
+      mood: ''
     })
   }
 

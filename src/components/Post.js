@@ -9,7 +9,8 @@ export default class Post extends React.Component {
         super(props);
         this.state = {
             date: '',
-            show: false
+            show: false,
+            tempPicture: ''
         }
     }
     setRef = webcam => {
@@ -35,7 +36,6 @@ export default class Post extends React.Component {
                     className="card-img-top"
                     audio={false}
                     height={360}
-                    // width={10}
                     ref={this.setRef}
                     />
                 <div className="card-body">
@@ -47,20 +47,42 @@ export default class Post extends React.Component {
                     <button variant="primary" className="btn btn-primary" onClick={async () => {
                         await this._capture();
                         this._handleShow();
-                        this.props.submitLocation();
-                    }}>post</button>
+                    }}>check!n</button>
                 </div>
         <Modal show={this.state.show} onHide={this._handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>post check!n?</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>
+            <div className="card">
+                <iframe className="card-img-top" title="map" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">map</a></iframe>
+                <img src={this.state.tempPicture} className="card-img-top" alt="..."/>
+                <div className="card-body">
+                    <h5 className="card-title">{this.state.date}</h5>
+                    <p className="card-text"><input value={this.props.inputValue} onChange={(e) => {
+                        this.props.handleInput(e.target.value);
+                    }}
+                    /></p>
+                    <button variant="primary" className="btn btn-primary" onClick={() => {
+                        // await this._capture();
+                        this._handleShow();
+                        this.props.submitLocation();
+                    }}>check!n</button>
+                </div>
+                </div>
+            </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={this._handleClose}>
-                    Close
+                <Button variant="primary" onClick={() => {
+                    this._handleClose();
+                    this.props.submitLocation();
+                    }}>
+                    post
                 </Button>
-                <Button variant="primary" onClick={this._handleClose}>
-                    Save Changes
+                <Button variant="secondary" onClick={() => {
+                    this._handleClose();
+                    this.props.resetMood();
+                    }}>
+                    cancel
                 </Button>
             </Modal.Footer>
         </Modal>
@@ -71,6 +93,9 @@ export default class Post extends React.Component {
     _capture = () => {
         const imageSrc = this.webcam.getScreenshot();
         this.props.savePicture(imageSrc);
+        this.setState({
+            tempPicture: imageSrc
+        })
     };
 
     _date = () => {
