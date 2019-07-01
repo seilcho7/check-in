@@ -1,12 +1,15 @@
 import React from 'react';
 import Webcam from "react-webcam";
 import '../App.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default class Post extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: ''
+            date: '',
+            show: false
         }
     }
     setRef = webcam => {
@@ -41,11 +44,26 @@ export default class Post extends React.Component {
                         this.props.handleInput(e.target.value);
                     }}
                     /></p>
-                    <button className="btn btn-primary" onClick={async () => {
+                    <button variant="primary" className="btn btn-primary" onClick={async () => {
                         await this._capture();
+                        this._handleShow();
                         this.props.submitLocation();
                     }}>post</button>
                 </div>
+        <Modal show={this.state.show} onHide={this._handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={this._handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={this._handleClose}>
+                    Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
             </div>
         )
     }
@@ -60,6 +78,18 @@ export default class Post extends React.Component {
         const date = new Date(timestamp).toLocaleString();
         this.setState({
             date
+        })
+    }
+
+    _handleClose = () => {
+        this.setState({
+            show: false
+        })
+    }
+
+    _handleShow = () => {
+        this.setState({
+            show: true
         })
     }
 

@@ -4,7 +4,8 @@ html, body {
 }
 
 .title {
-  width: 100%;
+  width: 30rem;
+  margin: auto;
   height: 50px;
   background-color: crimson;
   color: white;
@@ -16,6 +17,10 @@ html, body {
 .title h2 {
   margin: 0;
 }
+.nav {
+  width: 30rem;
+  margin: auto;
+}
 
 .nav-link {
   color: black;
@@ -24,6 +29,7 @@ html, body {
 .card {
   width: 30rem;
   margin: auto;
+  margin-bottom: 1rem;
 }
 
 input {
