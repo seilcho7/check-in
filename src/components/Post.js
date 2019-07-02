@@ -9,6 +9,7 @@ export default class Post extends React.Component {
         super(props);
         this.state = {
             date: '',
+            saveDate: '',
             show: false,
             tempPicture: ''
         }
@@ -33,9 +34,9 @@ export default class Post extends React.Component {
             <div className="card">
                 <iframe className="card-img-top" title="map" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">map</a></iframe>
                 <Webcam
-                    className="card-img-top"
+                    className="card-video-top"
                     audio={false}
-                    height={360}
+                    // height={360}
                     ref={this.setRef}
                     />
                 <div className="card-body">
@@ -47,45 +48,40 @@ export default class Post extends React.Component {
                     <button variant="primary" className="btn btn-primary" onClick={async () => {
                         await this._capture();
                         this._handleShow();
+                        this._saveDate();
                     }}>check!n</button>
                 </div>
-        <Modal show={this.state.show} onHide={this._handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>post check!n?</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-            <div className="card">
-                <iframe className="card-img-top" title="map" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">map</a></iframe>
-                <img src={this.state.tempPicture} className="card-img-top" alt="..."/>
-                <div className="card-body">
-                    <h5 className="card-title">{this.state.date}</h5>
-                    <p className="card-text"><input value={this.props.inputValue} onChange={(e) => {
-                        this.props.handleInput(e.target.value);
-                    }}
-                    /></p>
-                    <button variant="primary" className="btn btn-primary" onClick={() => {
-                        // await this._capture();
-                        this._handleShow();
-                        this.props.submitLocation();
-                    }}>check!n</button>
-                </div>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" onClick={() => {
-                    this._handleClose();
-                    this.props.submitLocation();
+                <Modal show={this.state.show} onHide={this._handleClose}>
+                    <Modal.Header closeButton onClick={() => {
+                        this.props.resetMood();
                     }}>
-                    post
-                </Button>
-                <Button variant="secondary" onClick={() => {
-                    this._handleClose();
-                    this.props.resetMood();
-                    }}>
-                    cancel
-                </Button>
-            </Modal.Footer>
-        </Modal>
+                        <Modal.Title>post check!n?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <div className="card">
+                        <iframe className="card-img-top" title="map" src={url} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"><a href="https://www.maps.ie/map-my-route/">map</a></iframe>
+                        <img src={this.state.tempPicture} className="card-img-top" alt="..."/>
+                        <div className="card-body">
+                            <h5 className="card-title">{this.state.saveDate}</h5>
+                            <p className="card-text">{this.props.inputValue}</p>
+                        </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => {
+                            this._handleClose();
+                            this.props.submitLocation();
+                            }}>
+                            post
+                        </Button>
+                        <Button variant="secondary" onClick={() => {
+                            this._handleClose();
+                            this.props.resetMood();
+                            }}>
+                            cancel
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         )
     }
@@ -103,6 +99,14 @@ export default class Post extends React.Component {
         const date = new Date(timestamp).toLocaleString();
         this.setState({
             date
+        })
+    }
+
+    _saveDate = () => {
+        const timestamp = Date.now();
+        const saveDate = new Date(timestamp).toLocaleString();
+        this.setState({
+            saveDate
         })
     }
 
