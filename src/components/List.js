@@ -13,7 +13,7 @@ export default class List extends React.Component {
         const response = await fetch('http://localhost:3001/api');
         const data = await response.json();
         const sortedData = data.sort(function(a, b) {
-            return b.timestamp - a.timestamp
+            return b.timestamp - a.timestamp;
         })
         this.setState({
             data: sortedData
@@ -35,7 +35,7 @@ export default class List extends React.Component {
                         <div className="card-body">
                             <h5 className="card-title">{date}</h5>
                             <p className="card-text">{post.mood}</p>
-                            <button className="btn btn-primary">delete</button>
+                            {/* <button onClick={this._delete} className="btn btn-primary">delete</button> */}
                         </div>
                     </div>
                 )
@@ -44,5 +44,4 @@ export default class List extends React.Component {
         )
 
     }
-    
 }
