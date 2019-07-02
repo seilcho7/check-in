@@ -78,7 +78,7 @@ class App extends React.Component {
 
   // Save data to nedb when submit button is clicked
   _submitLocation = async () => {
-    const response = await fetch('http://localhost:3001/api', {
+    const response = await fetch('https://checkin.seilcho7.dev/api', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json'
